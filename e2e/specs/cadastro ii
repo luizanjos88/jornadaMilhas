@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import { faker } from "@faker-js/faker"
 
-import PaginaCadastro from "./page-objects/PaginaCadastro";
+import PaginaCadastro from "../page-objects/PaginaCadastro";
 
 test.describe("Pagina de Cadastro", () => {
     test("Deve realizar o cadastro de um usuário e depois acessar a página home com os dados criados", async ({ page }) => {
