@@ -13,7 +13,7 @@ export default class PaginaCadastro {
   private readonly inputCidade: Locator;
   private readonly inputEstado: Locator;
   private readonly inputEmail: Locator;
-  private readonly confirmEmail: Locator;
+  private readonly confirmaEmail: Locator;
   private readonly inputSenha: Locator;
   private readonly confirmSenha: Locator;
   private readonly checkBoxTermo: Locator;
@@ -35,7 +35,7 @@ export default class PaginaCadastro {
     this.inputCidade = page.getByTestId('form-base-input-cidade');
     this.inputEstado = page.getByRole('combobox', { name: 'Estado' });
     this.inputEmail = page.getByTestId('form-base-input-email');
-    this.confirmEmail = page.getByText('Confirmar E-mail');
+    this.confirmaEmail = page.getByText('Confirmar E-mail');
     this.inputSenha = page.getByTestId('form-base-input-senha');
     this.confirmSenha = page.getByTestId('form-base-input-confirmar-senha');
     this.checkBoxTermo = page.getByRole('checkbox', { name: 'Li e aceito os termos e condi' });
@@ -51,10 +51,65 @@ export default class PaginaCadastro {
     await this.botaoVisitarPaginaDeCadastro.click();
     await expect(this.page).toHaveURL('/auth/cadastro');
   }
-  async estaMostrandoMensagemDeErro(mensagem: string) {
 
-    const elementoErro = this.page.getByText(mensagem);
-    await expect(elementoErro).toBeVisible();
+  async definirNome(nome: string) {
+    await this.inputName.fill(nome);
+  }
+
+  async definirDataNascimento(dataDeNascimento: Date) {
+    const dataFormatada = dataDeNascimento.toLocaleString('en-US', { dateStyle: 'short' });
+    await this.inputDataDeNascimento.fill(dataFormatada);
+  }
+
+  async definiirCpf(cpf: string) {
+    await this.inputCpf.fill(cpf);
+  }
+
+  async definirTelefone(telefone: string) {
+    await this.inputTelefone.fill(telefone);
 
   }
+
+  async definirCidade(cidade: string) {
+    await this.inputCidade.fill(cidade);
+  }
+
+  async definirEstado(estado: string) {
+    await this.inputEstado.fill(estado);
+    await this.inputEstado.click();
+
+  }
+
+  async definirEmail(email: string) {
+    await this.inputEmail.fill(email);
+  }
+
+  async confirmarEmail(email: string) {
+    await this.confirmaEmail.fill(email);
+  }
+
+  async definirSenha(senha: string) {
+    await this.inputSenha.fill(senha);
+
+  }
+
+  async confirmarSenha(senha: string) {
+    await this.confirmSenha.fill(senha);
+  }
+
+  async aceitarTermos() {
+    await this.checkBoxTermo.check();
+
+  }
+
+  async cadastrarConta() {
+    await this.botaoConfirmar.click()
+
+  }
+  //async estaMostrandoMensagemDeErro(mensagem: string) {
+
+  //const elementoErro = this.page.getByText(mensagem);
+  // await expect(elementoErro).toBeVisible();
+
+  // }
 }

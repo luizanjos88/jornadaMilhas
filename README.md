@@ -23,5 +23,3 @@ Acesse o [Figma do Jornada Milhas](https://www.figma.com/file/yz38uH9MvA69Ub3FxN
 Para abrir e rodar o projeto, execute `npm i` para instalar as dependências e `ng serve` para iniciar o projeto.
 
 Depois, acesse <a href="http://localhost:4200/">http://localhost:4200/</a> no seu navegador.
-
-Você também precisa rodar o [back-end utilizado no curso](https://github.com/viniciosneves/jornada-milhas-api).
