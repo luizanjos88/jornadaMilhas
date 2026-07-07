@@ -30,5 +30,6 @@ test.describe("Página de Cadastro", () => {
         await paginaCadastro.confirmarSenha(senha);
         await paginaCadastro.aceitarTermos();
         await paginaCadastro.cadastrarConta();
+        await paginaCadastro.LoginNovoUsuario(email, senha);
     })
 })

@@ -88,7 +88,7 @@ export default class PaginaCadastro {
 
   async definirEstado(estado: string) {
     await this.inputEstado.fill(estado);
-    await this.inputEstado.click();
+    await this.inputEstado.press('Enter');
 
   }
 
@@ -115,8 +115,17 @@ export default class PaginaCadastro {
   }
 
   async cadastrarConta() {
-    await this.botaoConfirmar.click()
-    await expect(this.page).toHaveURL('/auth/login')
+    await this.botaoConfirmar.click();
+    await expect(this.page).toHaveURL('/auth/login');
+
+  }
+
+  async LoginNovoUsuario(email: string, senha: string) {
+    await this.page.goto('/auth/login')
+    await this.inputEmailLogin.fill(email);
+    await this.inputSenhaLogin.fill(senha);
+    await this.botaoAcessarConta.click();
+    await expect(this.page).toHaveURL('/home')
 
   }
   //async estaMostrandoMensagemDeErro(mensagem: string) {
