@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
+import { Genero } from "e2e/specs/operações/gerarPerfil";
 
 export default class PaginaCadastro {
   private readonly page: Page;
@@ -6,9 +7,6 @@ export default class PaginaCadastro {
   private readonly inputName: Locator;
   private readonly inputDataDeNascimento: Locator;
   private readonly inputCpf: Locator;
-  private readonly radioFeminino: Locator;
-  private readonly radioMasculino: Locator;
-  private readonly radioNaoInformar: Locator;
   private readonly inputTelefone: Locator;
   private readonly inputCidade: Locator;
   private readonly inputEstado: Locator;
@@ -21,6 +19,7 @@ export default class PaginaCadastro {
   private readonly inputSenhaLogin: Locator;
   private readonly inputEmailLogin: Locator;
   private readonly botaoAcessarConta: Locator;
+  radioGenero: { [chave in Genero]: Locator };
 
   constructor(page: Page) {
     this.page = page;
@@ -28,9 +27,17 @@ export default class PaginaCadastro {
     this.inputName = page.getByTestId('form-base-input-nome');
     this.inputDataDeNascimento = page.getByText('Data de Nascimento');
     this.inputCpf = page.getByTestId('form-base-input-cpf');
-    this.radioFeminino = page.getByTestId('form-base-radio-genero-feminino');
-    this.radioMasculino = page.getByTestId('form-base-radio-genero-masculino');
-    this.radioNaoInformar = page.getByTestId('form-base-radio-genero-nao-informar');
+
+    const radioGeneroFeminino = page.getByTestId('form-base-radio-genero-feminino').getByLabel('Feminino');
+    const radioGeneroMasculino = page.getByTestId('form-base-radio-genero-masculino').getByLabel('Masculino');
+    const radioGeneroNaoInformar = page.getByTestId('form-base-radio-genero-nao-informar').getByLabel('Prefiro não informar');
+
+    this.radioGenero = {
+      [Genero.FEMININO]: radioGeneroFeminino,
+      [Genero.MASCULINO]: radioGeneroMasculino,
+      [Genero.OUTRO]: radioGeneroNaoInformar
+    }
+
     this.inputTelefone = page.getByTestId('form-base-input-telefone');
     this.inputCidade = page.getByTestId('form-base-input-cidade');
     this.inputEstado = page.getByRole('combobox', { name: 'Estado' });
@@ -59,6 +66,11 @@ export default class PaginaCadastro {
   async definirDataNascimento(dataDeNascimento: Date) {
     const dataFormatada = dataDeNascimento.toLocaleString('en-US', { dateStyle: 'short' });
     await this.inputDataDeNascimento.fill(dataFormatada);
+  }
+
+  async definirGenero(genero: Genero) {
+    const radioGenero = this.radioGenero[genero];
+    await radioGenero.check();
   }
 
   async definiirCpf(cpf: string) {
@@ -104,6 +116,7 @@ export default class PaginaCadastro {
 
   async cadastrarConta() {
     await this.botaoConfirmar.click()
+    await expect(this.page).toHaveURL('/auth/login')
 
   }
   //async estaMostrandoMensagemDeErro(mensagem: string) {

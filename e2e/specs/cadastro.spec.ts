@@ -15,10 +15,11 @@ test.describe("Página de Cadastro", () => {
         const estado = novoUsuario.estado;
         const email = novoUsuario.email;
         const senha = novoUsuario.senha;
+        const genero = novoUsuario.genero;
 
-
-        await paginaCadastro.definirNome(nomeAleatorio);
+        await paginaCadastro.definirNome(novoUsuario.nome);
         await paginaCadastro.definirDataNascimento(dataDeNascimento);
+        await paginaCadastro.definirGenero(genero);
         await paginaCadastro.definiirCpf(cpf);
         await paginaCadastro.definirTelefone(telefone);
         await paginaCadastro.definirCidade(cidade);
@@ -28,9 +29,6 @@ test.describe("Página de Cadastro", () => {
         await paginaCadastro.definirSenha(senha);
         await paginaCadastro.confirmarSenha(senha);
         await paginaCadastro.aceitarTermos();
-
-
-
-
+        await paginaCadastro.cadastrarConta();
     })
 })
