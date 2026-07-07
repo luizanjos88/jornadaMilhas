@@ -48,3 +48,7 @@ Thumbs.db
 # Playwright
 node_modules/
 /playwright/.auth/
+
+# e2e
+e2e/specs/cadastro2
+e2e/page-objects/PaginaCadastro2

@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { Genero } from "e2e/specs/operações/gerarPerfil";
+import { Perfil, gerarPerfil, Genero } from "e2e/specs/operações/gerarPerfil";
 
 export default class PaginaCadastro {
   private readonly page: Page;
@@ -116,6 +116,10 @@ export default class PaginaCadastro {
 
   async cadastrarConta() {
     await this.botaoConfirmar.click();
+
+  }
+
+  async cadastroRealizadoComSucesso() {
     await expect(this.page).toHaveURL('/auth/login');
 
   }
@@ -128,10 +132,27 @@ export default class PaginaCadastro {
     await expect(this.page).toHaveURL('/home')
 
   }
-  //async estaMostrandoMensagemDeErro(mensagem: string) {
 
-  //const elementoErro = this.page.getByText(mensagem);
-  // await expect(elementoErro).toBeVisible();
+  async cadastrarUsuario(usuario: Perfil) {
 
-  // }
+    await this.definirNome(usuario.nome);
+    await this.definirDataNascimento(usuario.dataNascimento)
+    await this.definirGenero(usuario.genero);
+    await this.definiirCpf(usuario.cpf);
+    await this.definirTelefone(usuario.telefone);
+    await this.definirCidade(usuario.cidade);
+    await this.definirEstado(usuario.estado);
+    await this.definirEmail(usuario.email);
+    await this.confirmarEmail(usuario.email);
+    await this.definirSenha(usuario.senha);
+    await this.confirmarSenha(usuario.senha);
+    await this.aceitarTermos();
+    await this.cadastrarConta();
+  }
+  async estaMostrandoMensagemDeErro(mensagem: string) {
+
+    const elementoErro = this.page.getByText(mensagem);
+    await expect(elementoErro).toBeVisible();
+
+  }
 }
